@@ -18,6 +18,9 @@
         "JavaScript-based",
         "Easiest programming language"
     ],
+    "dependencies": {
+        "fs": "https://www.npmjs.com/package/fs"
+    },
     "author": "nvmPratyush",
     "license": "Apache-2.0"
 }
