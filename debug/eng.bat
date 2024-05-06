@@ -1,30 +1,88 @@
-@echo off
+const fs = require('fs');
 
-REM Check if no arguments are passed
-if "%~1"=="" (
-    echo No file specified.
-    goto :EOF
-)
+// Define our EngInterpreter object
+const EngInterpreter = {
+    // Variable to store user-defined variables
+    variables: {},
 
-REM Check if the file extension is .eng
-set "filename=%~1"
-set "extension=%filename:~-4%"
-if /I "%extension%" NEQ ".eng" (
-    echo Only .eng files are supported.
-    goto :EOF
-)
+    // Function to evaluate arithmetic expressions
+    evaluateArithmetic: function(expression) {
+        // Evaluate the arithmetic expression and return the result
+        return eval(expression);
+    },
 
-REM Replace file-name.eng in index.js with the provided file name
-set "search=file-name.eng"
-set "replace=%filename%"
-set "textfile=C:/Program Files/Command prompt/Eng/index.js"
-set "newfile=C:/Program Files/Command prompt/Eng/script.js"
-(for /f "usebackq delims=" %%i in ("%textfile%") do (
-    set "line=%%i"
-    setlocal enabledelayedexpansion
-    echo(!line:%search%=%replace%!
-    endlocal
-)) > "%newfile%"
+    // Function to evaluate and execute Eng code
+    evaluate: function(code) {
+        // Split the code into individual lines
+        const lines = code.split('\n');
 
-REM Execute script.js
-node "%newfile%"
+        // Iterate over each line of code
+        lines.forEach(line => {
+            // Ignore empty lines
+            if (line.trim() === '') return;
+
+            // Remove quotes from strings
+            line = line.replace(/"/g, '');
+
+            // Check for "and" operator
+            const andIndex = line.indexOf(' and ');
+            if (andIndex !== -1) {
+                const lhs = line.slice(0, andIndex);
+                const rhs = line.slice(andIndex + 5);
+                line = lhs + ' ' + rhs;
+            }
+
+            // Check for arithmetic expression in print command
+            const printIndex = line.indexOf('print');
+            if (printIndex !== -1) {
+                const printArgs = line.slice(printIndex + 6).trim().split(' ');
+                const evaluatedArgs = printArgs.map(arg => {
+                    // Check if the argument is an arithmetic expression
+                    if (/^\d/.test(arg)) {
+                        return this.evaluateArithmetic(arg);
+                    }
+                    // Check if the argument is a variable
+                    if (arg in this.variables) {
+                        return this.variables[arg];
+                    }
+                    return arg;
+                });
+                console.log(evaluatedArgs.join(' '));
+                return;
+            }
+
+            // Split each line into tokens
+            const tokens = line.split(' ');
+
+            // Extract the command (first token)
+            const command = tokens[0];
+
+            // Extract the arguments (remaining tokens)
+            const args = tokens.slice(1);
+
+            // Execute the appropriate command
+            switch (command) {
+                case 'set':
+                    // Set command - store variable in variables object
+                    const variableName = args[0];
+                    const variableValue = args.slice(2).join(' ');
+                    this.variables[variableName] = variableValue;
+                    break;
+                default:
+                    // Unknown command - log error to console
+                    console.error(`Unknown command: ${command}`);
+            }
+        });
+    }
+};
+
+// Read the Eng code from the provided file
+fs.readFile('file-name.eng', 'utf8', (err, data) => {
+    if (err) {
+        console.error('Error reading file:', err);
+        return;
+    }
+
+    // Evaluate the Eng code
+    EngInterpreter.evaluate(data);
+});
