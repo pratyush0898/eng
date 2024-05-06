@@ -1,7 +1,7 @@
 @echo off
 
 REM Define the GitHub repository URL and folder path
-set "github_url=https://raw.githubusercontent.com/nvmPratyush/eng/debug/eng"
+set "github_url=https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/pratyush0898/eng/tree/main/debug/eng"
 
 REM Define the directory where you want to extract the contents
 set "extract_dir=C:\Program Files\Command prompt\Eng"
