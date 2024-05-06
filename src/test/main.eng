@@ -1,0 +1,3 @@
+print "Hello, world!"
+set name to "Aakanksha"
+print "hello, " name
