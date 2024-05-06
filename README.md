@@ -25,11 +25,11 @@ If you're on **Windows** and don't have curl installed, you can download it from
 
 To install **Eng**, follow these steps:
 
-1. Install the downloading file from **[hear](https://github.com/your-username/eng-program/releases/latest):**
+1. Install the downloading file from **[hear](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/pratyush0898/eng/tree/main/debug/install/install.bat):**
 
    
 
-2. run the **[install.bat](https://github.com/your-username/eng-program/blob/main/install.bat)** file once installed
+2. run the **[install.bat](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/pratyush0898/eng/tree/main/debug/install/install.bat)** file once installed
 
 4. Once installed, you can start using the Eng program:
 
@@ -40,7 +40,7 @@ To install **Eng**, follow these steps:
 
 If you're **faceing troble in installing eng** and eng runner So you can Install it manualy Here's how:
 
-1. Install the folder from **[hear]().**
+1. Install the folder from **[hear](https://minhaskamal.github.io/DownGit/#/home?url=https://github.com/pratyush0898/eng/tree/main/debug/eng).**
 
 2. After installation Move the folder to **C:\Program files**
 
